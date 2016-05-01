@@ -1,0 +1,58 @@
+##############################################
+#       .gitignore for Xcode 5 Project       #
+# https://gist.github.com/bartjacobs/8334797 #
+##############################################
+
+# Temporary Files OS X
+
+.DS_Store
+*.swp
+*.lock
+profile
+
+
+# Temporary Files Xcode
+
+*~.nib
+
+
+# Xcode Build Files
+
+DerivedData/
+build/
+
+
+# Xcode Private Settings
+
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+
+# Whitelist Defaults
+
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+
+# Xcode 5 Personal Settings
+
+xcuserdata
+
+
+# Xcode 5 Deprecated Classes
+
+*.moved-aside
+
+
+# Xcode 5 Version Control
+
+*.xccheckout
+
+
+# Cocoapods
+
+Pods/
