@@ -10,6 +10,7 @@ import UIKit
 
 class MasterViewController: UIViewController {
 
+    @IBOutlet var childViewControllersView: UIView!
     @IBOutlet var segmentedControl: UISegmentedControl!
 
     lazy var summaryViewController: SummaryViewController = {
@@ -83,10 +84,10 @@ class MasterViewController: UIViewController {
         addChildViewController(viewController)
 
         // Add Child View as Subview
-        view.addSubview(viewController.view)
+        childViewControllersView.addSubview(viewController.view)
 
         // Configure Child View
-        viewController.view.frame = view.bounds
+        viewController.view.frame = childViewControllersView.bounds
         viewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
         // Notify Child View Controller
