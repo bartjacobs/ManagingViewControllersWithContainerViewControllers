@@ -20,7 +20,7 @@ final class MasterViewController: UIViewController {
         var viewController = storyboard.instantiateViewController(withIdentifier: "SummaryViewController") as! SummaryViewController
 
         // Add View Controller as Child View Controller
-        self.addViewControllerAsChildViewController(viewController)
+        self.add(asChildViewController: viewController)
 
         return viewController
     }()
@@ -33,7 +33,7 @@ final class MasterViewController: UIViewController {
         var viewController = storyboard.instantiateViewController(withIdentifier: "SessionsViewController") as! SessionsViewController
 
         // Add View Controller as Child View Controller
-        self.addViewControllerAsChildViewController(viewController)
+        self.add(asChildViewController: viewController)
         
         return viewController
     }()
@@ -56,11 +56,11 @@ final class MasterViewController: UIViewController {
 
     private func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
-            removeViewControllerAsChildViewController(sessionsViewController)
-            addViewControllerAsChildViewController(summaryViewController)
+            remove(asChildViewController: sessionsViewController)
+            add(asChildViewController: summaryViewController)
         } else {
-            removeViewControllerAsChildViewController(summaryViewController)
-            addViewControllerAsChildViewController(sessionsViewController)
+            remove(asChildViewController: summaryViewController)
+            add(asChildViewController: sessionsViewController)
         }
     }
 
@@ -83,7 +83,7 @@ final class MasterViewController: UIViewController {
 
     // MARK: - Helper Methods
 
-    fileprivate func addViewControllerAsChildViewController(_ viewController: UIViewController) {
+    private func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
         addChildViewController(viewController)
 
@@ -98,7 +98,7 @@ final class MasterViewController: UIViewController {
         viewController.didMove(toParentViewController: self)
     }
     
-    fileprivate func removeViewControllerAsChildViewController(_ viewController: UIViewController) {
+    private func remove(asChildViewController viewController: UIViewController) {
         // Notify Child View Controller
         viewController.willMove(toParentViewController: nil)
 
