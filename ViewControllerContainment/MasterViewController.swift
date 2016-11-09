@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UIViewController {
+final class MasterViewController: UIViewController {
 
     @IBOutlet var segmentedControl: UISegmentedControl!
 

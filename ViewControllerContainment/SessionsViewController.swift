@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SessionsViewController: UIViewController {
+final class SessionsViewController: UIViewController {
 
     // MARK: - View Life Cycle
 

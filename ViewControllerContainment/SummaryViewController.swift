@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SummaryViewController: UIViewController {
+final class SummaryViewController: UIViewController {
 
     // MARK: - View Life Cycle
 
