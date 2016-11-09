@@ -12,7 +12,7 @@ final class MasterViewController: UIViewController {
 
     @IBOutlet var segmentedControl: UISegmentedControl!
 
-    lazy var summaryViewController: SummaryViewController = {
+    private lazy var summaryViewController: SummaryViewController = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
@@ -25,7 +25,7 @@ final class MasterViewController: UIViewController {
         return viewController
     }()
 
-    lazy var sessionsViewController: SessionsViewController = {
+    private lazy var sessionsViewController: SessionsViewController = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
@@ -48,13 +48,13 @@ final class MasterViewController: UIViewController {
 
     // MARK: - View Methods
 
-    func setupView() {
+    private func setupView() {
         setupSegmentedControl()
 
         updateView()
     }
 
-    func updateView() {
+    private func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
             removeViewControllerAsChildViewController(sessionsViewController)
             addViewControllerAsChildViewController(summaryViewController)
@@ -64,7 +64,7 @@ final class MasterViewController: UIViewController {
         }
     }
 
-    func setupSegmentedControl() {
+    private func setupSegmentedControl() {
         // Configure Segmented Control
         segmentedControl.removeAllSegments()
         segmentedControl.insertSegment(withTitle: "Summary", at: 0, animated: false)
