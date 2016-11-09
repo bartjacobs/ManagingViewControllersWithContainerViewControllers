@@ -14,10 +14,10 @@ class MasterViewController: UIViewController {
 
     lazy var summaryViewController: SummaryViewController = {
         // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("SummaryViewController") as! SummaryViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "SummaryViewController") as! SummaryViewController
 
         // Add View Controller as Child View Controller
         self.addViewControllerAsChildViewController(viewController)
@@ -27,10 +27,10 @@ class MasterViewController: UIViewController {
 
     lazy var sessionsViewController: SessionsViewController = {
         // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
 
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("SessionsViewController") as! SessionsViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "SessionsViewController") as! SessionsViewController
 
         // Add View Controller as Child View Controller
         self.addViewControllerAsChildViewController(viewController)
@@ -55,16 +55,16 @@ class MasterViewController: UIViewController {
     }
 
     func updateView() {
-        summaryViewController.view.hidden = !(segmentedControl.selectedSegmentIndex == 0)
-        sessionsViewController.view.hidden = (segmentedControl.selectedSegmentIndex == 0)
+        summaryViewController.view.isHidden = !(segmentedControl.selectedSegmentIndex == 0)
+        sessionsViewController.view.isHidden = (segmentedControl.selectedSegmentIndex == 0)
     }
 
     func setupSegmentedControl() {
         // Configure Segmented Control
         segmentedControl.removeAllSegments()
-        segmentedControl.insertSegmentWithTitle("Summary", atIndex: 0, animated: false)
-        segmentedControl.insertSegmentWithTitle("Sessions", atIndex: 1, animated: false)
-        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), forControlEvents: .ValueChanged)
+        segmentedControl.insertSegment(withTitle: "Summary", at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: "Sessions", at: 1, animated: false)
+        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
 
         // Select First Segment
         segmentedControl.selectedSegmentIndex = 0
@@ -72,13 +72,13 @@ class MasterViewController: UIViewController {
 
     // MARK: - Actions
 
-    func selectionDidChange(sender: UISegmentedControl) {
+    func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
     }
 
     // MARK: - Helper Methods
 
-    private func addViewControllerAsChildViewController(viewController: UIViewController) {
+    fileprivate func addViewControllerAsChildViewController(_ viewController: UIViewController) {
         // Add Child View Controller
         addChildViewController(viewController)
 
@@ -87,15 +87,15 @@ class MasterViewController: UIViewController {
 
         // Configure Child View
         viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         // Notify Child View Controller
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
     }
     
-    private func removeViewControllerAsChildViewController(viewController: UIViewController) {
+    fileprivate func removeViewControllerAsChildViewController(_ viewController: UIViewController) {
         // Notify Child View Controller
-        viewController.willMoveToParentViewController(nil)
+        viewController.willMove(toParentViewController: nil)
 
         // Remove Child View From Superview
         viewController.view.removeFromSuperview()
