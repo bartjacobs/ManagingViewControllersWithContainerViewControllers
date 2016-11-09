@@ -55,8 +55,13 @@ class MasterViewController: UIViewController {
     }
 
     func updateView() {
-        summaryViewController.view.isHidden = !(segmentedControl.selectedSegmentIndex == 0)
-        sessionsViewController.view.isHidden = (segmentedControl.selectedSegmentIndex == 0)
+        if segmentedControl.selectedSegmentIndex == 0 {
+            removeViewControllerAsChildViewController(sessionsViewController)
+            addViewControllerAsChildViewController(summaryViewController)
+        } else {
+            removeViewControllerAsChildViewController(summaryViewController)
+            addViewControllerAsChildViewController(sessionsViewController)
+        }
     }
 
     func setupSegmentedControl() {
