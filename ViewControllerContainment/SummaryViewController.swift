@@ -22,4 +22,10 @@ class SummaryViewController: UIViewController {
         print("Summary View Controller Will Appear")
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        print("Summary View Controller Will Disappear")
+    }
+
 }
