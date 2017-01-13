@@ -8,35 +8,20 @@
 
 import UIKit
 
+enum Selection: Int {
+    case summary
+    case sessions
+}
+
 final class MasterViewController: UIViewController {
+
+    // MARK: - Properties
 
     @IBOutlet var segmentedControl: UISegmentedControl!
 
-    private lazy var summaryViewController: SummaryViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    // MARK: -
 
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "SummaryViewController") as! SummaryViewController
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-
-        return viewController
-    }()
-
-    private lazy var sessionsViewController: SessionsViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "SessionsViewController") as! SessionsViewController
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-        
-        return viewController
-    }()
+    private var viewControllers = [Selection: UIViewController]()
 
     // MARK: - View Life Cycle
 
@@ -55,12 +40,25 @@ final class MasterViewController: UIViewController {
     }
 
     private func updateView() {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: sessionsViewController)
-            add(asChildViewController: summaryViewController)
+        if segmentedControl.selectedSegmentIndex == Selection.summary.rawValue {
+            // Remove Sessions View Controller
+            remove(asChildViewController: viewControllers[.sessions])
+
+            // Create Summary View Controller
+            viewControllers[.summary] = viewControllers[.summary] ?? createSummaryViewController()
+
+            // Add Summary View Controller
+            add(asChildViewController: viewControllers[.summary])
+
         } else {
-            remove(asChildViewController: summaryViewController)
-            add(asChildViewController: sessionsViewController)
+            // Remove Summary View Controller
+            remove(asChildViewController: viewControllers[.summary])
+
+            // Create Sessions View Controller
+            viewControllers[.sessions] = viewControllers[.sessions] ?? createSessionsViewController()
+
+            // Add Sessions View Controller
+            add(asChildViewController: viewControllers[.sessions])
         }
     }
 
@@ -83,7 +81,9 @@ final class MasterViewController: UIViewController {
 
     // MARK: - Helper Methods
 
-    private func add(asChildViewController viewController: UIViewController) {
+    private func add(asChildViewController viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+
         // Add Child View Controller
         addChildViewController(viewController)
 
@@ -98,7 +98,9 @@ final class MasterViewController: UIViewController {
         viewController.didMove(toParentViewController: self)
     }
     
-    private func remove(asChildViewController viewController: UIViewController) {
+    private func remove(asChildViewController viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+
         // Notify Child View Controller
         viewController.willMove(toParentViewController: nil)
 
@@ -108,5 +110,33 @@ final class MasterViewController: UIViewController {
         // Notify Child View Controller
         viewController.removeFromParentViewController()
     }
-    
+
+    // MARK: -
+
+    private func createSummaryViewController() -> SummaryViewController {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        // Instantiate View Controller
+        let viewController = storyboard.instantiateViewController(withIdentifier: "SummaryViewController") as! SummaryViewController
+
+        // Add View Controller as Child View Controller
+        self.add(asChildViewController: viewController)
+
+        return viewController
+    }
+
+    private func createSessionsViewController() -> SessionsViewController {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        // Instantiate View Controller
+        let viewController = storyboard.instantiateViewController(withIdentifier: "SessionsViewController") as! SessionsViewController
+
+        // Add View Controller as Child View Controller
+        self.add(asChildViewController: viewController)
+
+        return viewController
+    }
+
 }
